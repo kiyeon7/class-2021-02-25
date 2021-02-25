@@ -47,3 +47,39 @@ small %>%
 ```
 
 
+
+```{r}
+# See which months have highest deaths
+small %>% 
+  select(dmonth, dyear) %>% 
+  group_by(dmonth) %>% 
+  count() 
+
+```
+
+Recreate preceptor's graph
+
+```{r}
+
+small %>% 
+  select(dmonth, dyear) %>% 
+  group_by(dyear, dmonth) %>% 
+  count() %>% 
+  pivot_wider(names_from = dmonth,
+              names_prefix = "dmonth_",
+              values_from = n) %>% 
+  mutate(ratio = dmonth_1 / dmonth_7) %>% 
+  
+  ggplot(aes(x = dyear, y = ratio)) +
+  geom_point() +
+  geom_smooth(method = lm,
+              formula = y ~ x) +
+  labs(title = "Mortality over time",
+       subtitle = "Are January deaths increasing?",
+       x = "year of death", y = "ratio of January to July deaths",
+       caption = "Source: CenSoc")
+       
+  
+
+```
+

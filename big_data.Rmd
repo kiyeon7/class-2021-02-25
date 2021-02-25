@@ -29,5 +29,21 @@ x <- read_csv("~/data/census/censoc_dmf_v2/censoc_dmf_v2.csv",
 ```
 
 
+Create 1% sample of the data 
+
+```{r}
+small <- x %>% 
+  slice_sample(prop = 0.01)
+
+```
+
+
+Create bar plot of dbmonth with small
+
+```{r}
+small %>% 
+  ggplot(aes(x = dmonth)) +
+  geom_bar()
+```
 
 
